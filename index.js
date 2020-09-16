@@ -1,9 +1,12 @@
 const express=require('express');
 const app=express();
 const port=8000;
-
+//use express router
 app.use('/',require('./routes/index'));//here we could write either ./routes only then also this search for the index.js inside it or either the way it is written './routes/index'
 
+//for setting up our view engine
+app.set('view engine','ejs');
+app.set('views','./views');
 
 
 
