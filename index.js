@@ -2,7 +2,7 @@ const express=require('express');
 const app=express();
 const port=8000;
 
-
+app.use('/',require('./routes/index'));//here we could write either ./routes only then also this search for the index.js inside it or either the way it is written './routes/index'
 
 
 
