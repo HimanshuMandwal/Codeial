@@ -1,7 +1,12 @@
 const express=require('express');
 const app=express();
 const port=8000;
-//use express router for different routing 
+const expressLayouts=require('express-ejs-layouts');
+
+//for using layouts we need to require 'express-ejs-layouts' and write app.use(expressLayouts); just above the routes
+app.use(expressLayouts);
+
+//use express router for different routing
 app.use('/',require('./routes/index'));//here we could write either ./routes only then also this search for the index.js inside it or either the way it is written './routes/index'
 //any request comes in require the index of routes
 
