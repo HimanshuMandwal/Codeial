@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port=8000;
 const expressLayouts=require('express-ejs-layouts');
+const db = require('./config/mongoose');
 
 app.use(express.static('./assets'));
 //for using layouts we need to require 'express-ejs-layouts' and write app.use(expressLayouts); just above the routes as the routes are going to use the views that uses this layout
