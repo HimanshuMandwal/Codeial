@@ -3,6 +3,11 @@ const app = express();
 const port=8000;
 const expressLayouts=require('express-ejs-layouts');
 const db = require('./config/mongoose');
+const cookieParser = require('cookie-parser');
+
+app.use(express.urlencoded());
+
+app.use(cookieParser());//used for reading and writing into cookies we use this library and used it here as it has to be done in middleware section
 
 app.use(express.static('./assets'));
 //for using layouts we need to require 'express-ejs-layouts' and write app.use(expressLayouts); just above the routes as the routes are going to use the views that uses this layout
