@@ -3,16 +3,22 @@
     <head>
         <title><%=title%></title>
         <link rel="stylesheet" href="/css/layout.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/footer.css">
         <%- style %>
     </head>
     <body>
+        <div class="nav">
         <%- include('_header');%>
-
+        </div>
+        <div class="main">
         <%- body%>
         <!-- this body is by default understandable -->
+        </div>
 
+        <div class="footer">
         <%- include('_footer');%>
-
+        </div>
         <%- script %>
     </body>
 </html>

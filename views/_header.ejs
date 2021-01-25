@@ -1,3 +1,20 @@
 <header>
-    page header
+    <ul class="navbar-list">
+        <li class="icon">
+            Codeial
+        </li>
+        <li class="search-box">
+
+        </li>
+        <li class="user-buttons">
+            <%if(locals.user) {%>
+                    <a href="/user/profile" class="link-default header-button"><button ><%= user.name %></button></a>
+                    <a href="/user/sign-out" class="link-default header-button"><button >Sign Out</button></a>
+            <%} else {%>
+                    <a href="/user/sign-in" class="link-default header-button"><button > Sign In</button> </a>
+                    <a href="/user/sign-up" class="link-default header-button" > <button >Sign up </button></a>
+            <% } %>
+
+        </li>
+    </ul>
 </header>

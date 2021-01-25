@@ -1,0 +1,55 @@
+.navbar-list {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.icon {
+  width: 15%;
+  height: auto;
+  font-size: 30px;
+  margin: 10px;
+}
+
+.search-box {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.user-buttons {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.header-button {
+  display: flex;
+  width: 40%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-button button {
+  border: none;
+  width: 100%;
+  height: 50%;
+  background: darkblue;
+  color: #f5eaea;
+  z-index: 2;
+  transition: 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+.header-button:hover button {
+  background-color: gainsboro;
+  color: black;
+}
+
+.header-button:hover button a {
+  color: darkblue;
+}

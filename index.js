@@ -1,9 +1,24 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 const port=8000;
 const expressLayouts=require('express-ejs-layouts');
 const db = require('./config/mongoose');
-const cookieParser = require('cookie-parser');
+//for authentication purepose
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-stretegy');
+const mongoStore = require('connect-mongo')(session);
+const sassMiddleware = require('node-sass-middleware');
+
+/*      config for scss      */
+app.use(sassMiddleware({
+  src: './assets/scss', //here this ./ is mendatory without it does not work fine
+  dest: './assets/css',
+  debug: true,
+  outputStyle: 'expanded',
+  prefix:'/css',
+}));
 
 app.use(express.urlencoded());
 
@@ -18,9 +33,7 @@ app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 
 
-//use express router for different routing
-app.use('/',require('./routes/index'));//here we could write either ./routes only then also this search for the index.js inside it or either the way it is written './routes/index'
-//any request comes in require the index of routes
+
 
 
 
@@ -28,11 +41,32 @@ app.use('/',require('./routes/index'));//here we could write either ./routes onl
 app.set('view engine','ejs');
 app.set('views','./views');
 
+ //mongo store is used to store the session cookie in db
+app.use(session({
+  name: "codeial",
+  //TODO change the secrete before deployment in production mode
+  secret:'blahsomething', //for encoding we have to use a key that is here we used a dummy
+  saveUninitialized:false, //this used if we dont have establised the initialization or loged in do we need to save the other things that are set by our we to be saved in cookie
+  resave: false, // this is used if we have some presaved cookies and the cookies that is send by server matches that do we need to resave that
+  cookie: {
+    maxAge: (1000 * 60 * 100 * 10),// number in miliseconds age of the cookies
+  },
+  store: new mongoStore({ //this store is used to store the cookie permanently in db so that  whenever we restart the server we did not need to sign in again
+    mongooseConnection: db,
+    autoRemove: 'disabled',
+  }
+  ,function(err) {
+      console.log(err || ` connect-mongodb setup ok `)
+  })
+}));
 
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(passport.setAuthenticatedUser); //middleware is called
 
-
-
-
+//use express router for different routing
+app.use('/',require('./routes/index'));//here we could write either ./routes only then also this search for the index.js inside it or either the way it is written './routes/index'
+//any request comes in require the index of routes
 
 
 app.listen(port,function(err){
