@@ -1,0 +1,18 @@
+.post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  background-color: blanchedalmond;
+  height: 100%;
+}
+
+.post-container div {
+  width: 90%;
+  height: 30%;
+}
+
+#feed-posts {
+  display: block;
+  height: 80%;
+}
