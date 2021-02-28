@@ -7,10 +7,18 @@
     height: 100%;
     div{
         width: 90%;
-        height: 30%;
+        height:auto;
+        margin: 10px;
+        box-shadow: black
+        ;
     }
+    overflow:scroll;
 }
 #feed-posts { //optional
     display: block;
     height: 80%;
+}
+
+.post-comments{
+    background-color: rgb(243, 245, 240);
 }

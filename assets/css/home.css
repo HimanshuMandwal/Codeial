@@ -5,14 +5,21 @@
   width: 60%;
   background-color: blanchedalmond;
   height: 100%;
+  overflow: scroll;
 }
 
 .post-container div {
   width: 90%;
-  height: 30%;
+  height: auto;
+  margin: 10px;
+  box-shadow: black;
 }
 
 #feed-posts {
   display: block;
   height: 80%;
+}
+
+.post-comments {
+  background-color: #f3f5f0;
 }
