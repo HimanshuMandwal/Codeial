@@ -1,8 +1,8 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const app = express();
-const port=8000;
-const expressLayouts=require('express-ejs-layouts');
+const port = 8000;
+const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
 //for authentication purepose
 const session = require('express-session');
@@ -10,6 +10,8 @@ const passport = require('passport');
 const passportLocal = require('./config/passport-local-stretegy');
 const mongoStore = require('connect-mongo')(session);
 const sassMiddleware = require('node-sass-middleware');
+const flash = require('connect-flash');
+const customMiddleware = require('./config/middleware');
 
 /*      config for scss      */
 app.use(sassMiddleware({
@@ -17,7 +19,7 @@ app.use(sassMiddleware({
   dest: './assets/css',
   debug: true,
   outputStyle: 'expanded',
-  prefix:'/css',
+  prefix: '/css',
 }));
 
 app.use(express.urlencoded());
@@ -29,8 +31,8 @@ app.use(express.static('./assets'));
 app.use(expressLayouts);
 
 //to extract the styles and script from sub pages to layout use this two lines
-app.set('layout extractStyles',true);
-app.set('layout extractScripts',true);
+app.set('layout extractStyles', true);
+app.set('layout extractScripts', true);
 
 
 
@@ -38,15 +40,15 @@ app.set('layout extractScripts',true);
 
 
 //for setting up our view engine
-app.set('view engine','ejs');
-app.set('views','./views');
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
- //mongo store is used to store the session cookie in db
+//mongo store is used to store the session cookie in db
 app.use(session({
   name: "codeial",
   //TODO change the secrete before deployment in production mode
-  secret:'blahsomething', //for encoding we have to use a key that is here we used a dummy
-  saveUninitialized:false, //this used if we dont have establised the initialization or loged in do we need to save the other things that are set by our we to be saved in cookie
+  secret: 'blahsomething', //for encoding we have to use a key that is here we used a dummy
+  saveUninitialized: false, //this used if we dont have establised the initialization or loged in do we need to save the other things that are set by our we to be saved in cookie
   resave: false, // this is used if we have some presaved cookies and the cookies that is send by server matches that do we need to resave that
   cookie: {
     maxAge: (1000 * 60 * 100 * 10),// number in miliseconds age of the cookies
@@ -55,29 +57,28 @@ app.use(session({
     mongooseConnection: db,
     autoRemove: 'disabled',
   }
-  ,function(err) {
+    , function (err) {
       console.log(err || ` connect-mongodb setup ok `)
-  })
+    })
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser); //middleware is called
+app.use(flash());
+app.use(customMiddleware.setFlash);
+
 
 //use express router for different routing
-app.use('/',require('./routes/index'));//here we could write either ./routes only then also this search for the index.js inside it or either the way it is written './routes/index'
+app.use('/', require('./routes/index'));//here we could write either ./routes only then also this search for the index.js inside it or either the way it is written './routes/index'
 //any request comes in require the index of routes
 
 
-app.listen(port,function(err){
-    if(err)
-    {
-    // console.log('there is a error in setting up the server',err);
+app.listen(port, function (err) {
+  if (err) {
     console.log(`error:${err}`);//using enterpolation(uses back ticks)
-
-    }
-    else{
-        // console.log('server is running on the port :',port);
-        console.log(`server is running on port :${port} `);
-    }
+  }
+  else {
+    console.log(`server is running on port :${port} `);
+  }
 });
