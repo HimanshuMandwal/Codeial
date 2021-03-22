@@ -8,16 +8,18 @@ module.exports.post = function(req,res){
     });
 };
 
-module.exports.create = function(req, res) {
-  Post.create({
-    content: req.body.content,
-    user: req.user._id,
-  },(err, post)=>{
-    if(err) {
-      console.log(`Error In creating the post :: ${err}`);
-    }
+module.exports.create = async function(req, res) {
+  try{
+    await Post.create({
+      content: req.body.content,
+      user: req.user._id,
+    })
     return res.redirect('back');
-  })
+  } catch(err) {
+    console.log(`Error In creating the post :: ${err}`);
+    return res.redirect('back');
+  }
+
 }
 
 module.exports.destroy = function(req, res) {
