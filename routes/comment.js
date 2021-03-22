@@ -5,7 +5,7 @@ const commentsController=require('../controllers/comment_controller');
 
 router.post('/create',passport.checkAuthentication,commentsController.create);
 // router.get('/',postController.getPosts);
-
+router.get('/destroy/:id',passport.checkAuthentication , commentsController.destroy);
 
 
 

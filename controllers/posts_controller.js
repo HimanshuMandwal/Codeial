@@ -1,5 +1,6 @@
 const e = require('express');
 const Post = require('../models/post');//schema imported
+const Comment = require('../models/comments');
 
 module.exports.post = function(req,res){
     return res.render('posts',{
@@ -19,3 +20,23 @@ module.exports.create = function(req, res) {
   })
 }
 
+module.exports.destroy = function(req, res) {
+  Post.findById(req.params.id, function(err, post){
+    // .id means the converting Object Id into string
+    if(err) {
+      console.log(`Post::destroy:: there is error in deleting the post ${err}`);
+      return res.redirect('back');
+    }
+    if(post.user.id == req.user.id) {
+      post.remove();
+      Comment.deleteMany({post : req.params.id}, function(err){ // delete  the comments associate with the post
+        if(err) {
+          console.log(`Post::destroy:: there is error in deleting the comment ${err}`);
+        }
+        res.redirect('back');
+      })
+    } else {
+      res.redirect('back');
+    }
+  })
+}

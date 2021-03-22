@@ -11,44 +11,19 @@
                 <textarea cols="30" rows="3" name="content" placeholder="type here"></textarea>
                 <input type="submit" value="Post">
             </form>
-
-
-            <%for(let post of posts) {%>
-
-            <div class="post">
-                <p>
-                    <div class="post-content">
-                        Post : -  <%=post.content%>
-                    </div>
-                    <div class="post-creator">
-                        Creator : - <%=post.user.name%>
-                    </div>
-                </p>
-                <div class="post-comments">
-                    <%if(locals.user) {%>
-                    <form class="comment-form" method="POST" action="/comment/create">
-                        <input type="text" name="content" placeholder="type here to add comment..."></input>
-                        <input type="hidden" name="post" value="<%=post._id%>"></input>
-                        <input type="submit" value="Comment">
-                    </form>
-                    <%}%>
-                    <div class="post-comments-list">
-                        <ul id="post-comments-<%=post._id %>">
-                            <%for(comment of post.comment) {%>
-                                <p>
-                                    <%=comment.content%>
-                                    <br>
-                                    <small>
-                                    <%=comment.user.name%>
-                                </small>
-                                </p>
-
-                            <%}%>
-                        </ul>
-                    </div>
-                </div>
-                </div>
-             <%}%>s
+            <%for( post of posts) {%>
+                <%- include('_post') -%>
+            <%}%>
         </div>
-         <%}%>
+        <%}%>
+</section>
+
+<section id="user-friends">
+    <h4>Friends</h4>
+   <% for(user of allUsers) {%>
+        <p>
+            <a href="/user/profile/<%=user.id%>"></a>
+        </p>
+    <%}%>
+
 </section>

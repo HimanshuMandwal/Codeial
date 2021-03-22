@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { id } = require('../config/mongoose');
+const { user } = require('../config/mongoose');
 const Post = require('../models/post');
 const User = require('../models/user');
 
@@ -18,10 +18,16 @@ module.exports.home = function (req, res) {
     if(err){
       console.log(`Error In getting the post :: ${err}`);
     }
-    console.log(posts);
-    return res.render('home', {
-      posts:posts,
-      title: 'home'
+    User.find({},(err,users)=>{
+      if(err) {
+        console.log('error in getting the users'+err);
+      }
+      return res.render('home', {
+        posts:posts,
+        title: 'home',
+        allUsers: users,
+      })
     })
+
   });
 };
