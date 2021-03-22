@@ -1,11 +1,10 @@
 *{
-    margin: 0px;
+   margin: 0px;
    padding: 0px;
 }
 
 body {
     display: flex;
-    height: 100vh;
     flex-direction: column;
 }
 
@@ -19,11 +18,12 @@ body {
 header {
     height: 100%;
 }
-.main {
-    flex-grow: 1;
-}
 
 .footer {
     background: cornflowerblue;
     height: 60px;
+}
+.section80vh{
+    height: 80vh;
+    padding: 10px;
 }

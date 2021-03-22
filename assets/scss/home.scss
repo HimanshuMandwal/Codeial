@@ -1,22 +1,40 @@
+#home-container {
+    display: flex;
+    #feed-posts {
+        width: 70%;
+        padding: 10px;
+    }
+    #user-friends{
+        width: 20%;
+        padding: 10px;
+        border-left:1px solid lightgray ;
+    }
+    #dumy{
+        width: 10%;
+        padding: 10px;
+        border-right:1px solid lightgray ;
+    }
+}
+
+
+
 .post-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
     background-color: blanchedalmond;
     height: 100%;
     div{
         width: 90%;
         height:auto;
         margin: 10px;
-        box-shadow: black
-        ;
+        box-shadow: black;
     }
     overflow:scroll;
 }
 #feed-posts { //optional
     display: block;
-    height: 80%;
+
 }
 
 .post-comments{

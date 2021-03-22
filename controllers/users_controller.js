@@ -1,9 +1,31 @@
 const { model, user } = require('../config/mongoose');
 const User = require('../models/user');
 module.exports.profile = function (req, res) {
-  return res.render('user_profile', {
-    title: 'user | profile',
-  });
+  User.findById(req.params.id , (err,user) => {
+    if(err) {
+      console.error(`Error in getting the profile of user :: ${err}`);
+      return res.redirect('back');
+    }
+    return res.render('user_profile', {
+      title: 'user | profile',
+      profileUser: user,
+    });
+  })
+
+}
+
+module.exports.update = function(req , res) {
+  if(req.user.id == req.params.id) {
+    User.findByIdAndUpdate(req.params.id , req.body, function(err, user) {
+      if(err) {
+        console.error(`Error in the updating the users info ${err}`);
+        return res.redirect('back');
+      }
+      return res.redirect('back');
+    })
+  } else {
+    res.status(401).send('unauthorized');
+  }
 }
 
 //render the sign up page
@@ -63,3 +85,4 @@ module.exports.destroySession = function(req, res) {
   req.logout(); //given by the passport to logout any user
   return res.redirect('/');
 }
+

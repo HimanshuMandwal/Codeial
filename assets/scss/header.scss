@@ -13,6 +13,11 @@
     height: auto;
     font-size: 30px;
     margin: 10px;
+    a{
+        text-decoration: none;
+        color: white;
+    }
+
 }
 
 .search-box {
@@ -55,6 +60,6 @@
     a {
         color:darkblue;
     }
-}
+    }
 }
 

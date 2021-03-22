@@ -1,8 +1,28 @@
+#home-container {
+  display: flex;
+}
+
+#home-container #feed-posts {
+  width: 70%;
+  padding: 10px;
+}
+
+#home-container #user-friends {
+  width: 20%;
+  padding: 10px;
+  border-left: 1px solid lightgray;
+}
+
+#home-container #dumy {
+  width: 10%;
+  padding: 10px;
+  border-right: 1px solid lightgray;
+}
+
 .post-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
   background-color: blanchedalmond;
   height: 100%;
   overflow: scroll;
@@ -17,7 +37,6 @@
 
 #feed-posts {
   display: block;
-  height: 80%;
 }
 
 .post-comments {
