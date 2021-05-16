@@ -2,43 +2,45 @@ const e = require('express');
 const Post = require('../models/post');//schema imported
 const Comment = require('../models/comments');
 
-module.exports.post = function(req,res){
-    return res.render('posts',{
-        title:'Posts'
-    });
+module.exports.post = function (req, res) {
+  return res.render('posts', {
+    title: 'Posts'
+  });
 };
 
-module.exports.create = async function(req, res) {
-  try{
+module.exports.create = async function (req, res) {
+  try {
     await Post.create({
       content: req.body.content,
       user: req.user._id,
     })
+    req.flash('success', 'post published !');
     return res.redirect('back');
-  } catch(err) {
+  } catch (err) {
     console.log(`Error In creating the post :: ${err}`);
+    req.flash('error', err);
     return res.redirect('back');
   }
 
 }
 
-module.exports.destroy = function(req, res) {
-  Post.findById(req.params.id, function(err, post){
+module.exports.destroy = async function (req, res) {
+
+  try {
     // .id means the converting Object Id into string
-    if(err) {
-      console.log(`Post::destroy:: there is error in deleting the post ${err}`);
+    let post = await Post.findById(req.params.id);
+    if (post.user == req.user.id) {
+      post.remove();
+      await Comment.deleteMany({ post: req.params.id });
+      req.flash('success', 'post and associated comments destroyed!');
+      return res.redirect('back');
+    } else {
+      req.flash('error', ' you cannot delete this post ');
       return res.redirect('back');
     }
-    if(post.user.id == req.user.id) {
-      post.remove();
-      Comment.deleteMany({post : req.params.id}, function(err){ // delete  the comments associate with the post
-        if(err) {
-          console.log(`Post::destroy:: there is error in deleting the comment ${err}`);
-        }
-        res.redirect('back');
-      })
-    } else {
-      res.redirect('back');
-    }
-  })
+  } catch (err) {
+    req.flash('error', err);
+    return res.redirect('back');
+  }
+
 }

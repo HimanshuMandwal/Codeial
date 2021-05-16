@@ -10,20 +10,20 @@
 #home-container #user-friends {
   width: 20%;
   padding: 10px;
-  border-left: 1px solid lightgray;
+  border-left: 1px solid gray;
 }
 
 #home-container #dumy {
   width: 10%;
   padding: 10px;
-  border-right: 1px solid lightgray;
+  border-right: 1px solid gray;
 }
 
 .post-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: blanchedalmond;
+  background-color: azure;
   height: 100%;
   overflow: scroll;
 }

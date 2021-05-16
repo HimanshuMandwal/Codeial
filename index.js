@@ -17,9 +17,9 @@ const customMiddleware = require('./config/middleware');
 app.use(sassMiddleware({
   src: './assets/scss', //here this ./ is mendatory without it does not work fine
   dest: './assets/css',
-  debug: true,
+  debug: true, //this will be used to display the error while compiling the code
   outputStyle: 'expanded',
-  prefix: '/css',
+  prefix: '/css', // where the server looks for css file
 }));
 
 app.use(express.urlencoded());
@@ -30,7 +30,7 @@ app.use(express.static('./assets'));
 //for using layouts we need to require 'express-ejs-layouts' and write app.use(expressLayouts); just above the routes as the routes are going to use the views that uses this layout
 app.use(expressLayouts);
 
-//to extract the styles and script from sub pages to layout use this two lines
+//to extract the styles and script from sub pages to layouts <head> use this two lines
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
 

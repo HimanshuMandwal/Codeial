@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-const { user } = require('../config/mongoose');
 const Post = require('../models/post');
 const User = require('../models/user');
 
@@ -16,7 +14,6 @@ module.exports.home = async function (req, res) { //to have a async statements i
         }
       });
     let users = await User.find({}); //this successfull response is stored in the users variable and the flow of the code goes to next iteration only after completing this statement
-
     return res.render('home', {
       posts: posts,
       title: 'home',

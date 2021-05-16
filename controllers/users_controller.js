@@ -43,39 +43,39 @@ module.exports.signUp = function (req, res) {
 //render the sign in page
 module.exports.signIn = function (req, res) {
   if(req.isAuthenticated()){
+
     return res.redirect('/user/profile');
   }
+
   return res.render('user_sign_In', {
     title: 'codial | sign In'
   })
 }
 
 // get the sign up data
-module.exports.create = function (req, res) {
+module.exports.create = async function (req, res) {
   if (req.body.password != req.body.confirm_password) {
-    res.redirect('back');
+    req.flash("error","confirm password and password not matched");
+    return res.redirect('back');
   }
   //finding in DB
-  User.findOne({ email: req.body.email }, function (err, user) {
-    if (err) {
-      console.log(`Error :: in finding up the user in signing Up ::${err}`);
-      return;
-    }
-    //not in DB then create the user
-    if (!user) {
-      User.create(req.body, function (err, user) {
-        if (err) {
-          console.log(`Error :: in creating up the user in signing Up ::${err}`);
-          return;
-        }
+  try {
+    let user = await User.findOne({ email: req.body.email });
+      //not in DB then create the user
+      if (!user) {
+          await User.create(req.body);
+          req.flash("success","sign up successfull");
+          return res.redirect('/user/sign-in');
+      } else {
+        req.flash("warning","user already exists")
+        return res.redirect('back');
+      }
 
-        return res.redirect('/user/sign-in');
+  } catch(e) {
+    req.flash("error","error in sign up");
+    return res.redirect("back");
+  }
 
-      })
-    } else {
-      res.redirect('back');
-    }
-  })
 }
 
 // sign in and create the session for login
