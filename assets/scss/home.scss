@@ -1,17 +1,18 @@
 #home-container {
     display: flex;
+    height: 82vh;
     #feed-posts {
         width: 70%;
-        padding: 10px;
+        padding: 2px;
     }
     #user-friends{
         width: 20%;
-        padding: 10px;
+        padding: 15px;
         border-left:1px solid gray ;
     }
     #dumy{
         width: 10%;
-        padding: 10px;
+        padding: 2px;
         border-right:1px solid gray ;
     }
 }

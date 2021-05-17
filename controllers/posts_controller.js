@@ -1,6 +1,7 @@
 const e = require('express');
 const Post = require('../models/post');//schema imported
 const Comment = require('../models/comments');
+const User = require('../models/user');
 
 module.exports.post = function (req, res) {
   return res.render('posts', {
@@ -13,11 +14,13 @@ module.exports.create = async function (req, res) {
     let post = await Post.create({
       content: req.body.content,
       user: req.user._id,
-    })
+    });
+    const user = await User.findById(post.user);
     if(req.xhr){
       return res.status(200).json({
         data: {
-          post:post
+          post:post,
+          user:user
         },
         message:"post created !"
       })

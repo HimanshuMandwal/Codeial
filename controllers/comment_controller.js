@@ -5,8 +5,18 @@ module.exports.create = async function(req, res) {
     let post  = await Post.findById(req.body.post )
     if(post) {
      let comment = await Comment.create({content: req.body.content,post: req.body.post,user: req.user._id,});
+     console.log(req.user);
       await post.comment.push(comment);
       await post.save() //this function is used whenever we update the data inside a object saved in database
+      if(req.xhr){
+        return res.status(200).json({
+          data: {
+            comment:comment,
+            user: req.user
+          },
+          message:"comment created !"
+        })
+      }
       req.flash("success","comment is added successfully" );
       return res.redirect('back');
     }
@@ -25,6 +35,14 @@ module.exports.destroy = async function(req, res) {
         await comment.remove();
         let post =  await Post.findByIdAndUpdate(postId,{$pull:{comment:req.params.id}});
         if(post) {
+          if(req.xhr){
+            return res.status(200).json({
+              data: {
+                comment:comment,
+              },
+              message:"comment deleted !"
+            })
+          }
           req.flash("success" , "comment deleted succesfully");
           return res.redirect('back');
         }

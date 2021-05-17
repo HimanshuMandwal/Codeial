@@ -6,6 +6,7 @@
 body {
     display: flex;
     flex-direction: column;
+    height: 100vh;
 }
 
 .link-default {
@@ -13,7 +14,7 @@ body {
 }
 .nav {
     background: cornflowerblue;
-    height:60px;
+    height:9vh;
 }
 header {
     height: 100%;
@@ -21,7 +22,7 @@ header {
 
 .footer {
     background: cornflowerblue;
-    height: 60px;
+    height: 9vh;
 }
 .section80vh{
     height: 80vh;
