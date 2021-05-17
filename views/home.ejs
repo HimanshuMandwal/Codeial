@@ -16,9 +16,11 @@
                     <textarea cols="30" rows="3" name="content" placeholder="type here"></textarea>
                     <input type="submit" value="Post">
                 </form>
-                <%for( post of posts) {%>
-                    <%- include('_post') -%>
-                <%}%>
+                <div id="post-list-container">
+                    <%for( post of posts) {%>
+                        <%- include('_post') -%>
+                    <%}%>
+                </div>
             </div>
             <%}%>
     </section>
@@ -33,3 +35,4 @@
 
     </section>
 </div>
+<script src="/js/home_post.js"></script>

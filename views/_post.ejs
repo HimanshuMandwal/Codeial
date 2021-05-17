@@ -1,9 +1,9 @@
-<div class="post">
+<div class="post" id="post-<%= post._id%>">
     <p>
         <div class="post-content">
             <%if(locals.user && locals.user.id == post.user.id){%>
             <small>
-                <a href="/post/destroy/<%=post.id%>">delete Post</a>
+                <a class="delete-post-button" href="/post/destroy/<%=post.id%>">delete Post</a>
             </small>
             <%}%>
             Post : -  <%=post.content%>

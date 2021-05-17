@@ -6,6 +6,7 @@ module.exports.home = async function (req, res) { //to have a async statements i
   // res.cookie('user_id',34); for additing the cookies
   try {
     let posts = await Post.find({})
+      .sort('-createdAt')
       .populate('user')
       .populate({
         path: 'comment',
