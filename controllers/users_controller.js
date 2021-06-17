@@ -1,5 +1,7 @@
-const { model, user } = require('../config/mongoose');
 const User = require('../models/user');
+const fs = require('fs');
+const path = require('path');
+
 module.exports.profile = async function (req, res) {
   try {
     let user = await User.findById(req.params.id );
@@ -19,10 +21,27 @@ module.exports.profile = async function (req, res) {
 module.exports.update = async function(req , res) {
   if(req.user.id == req.params.id) {
     try {
-      await User.findByIdAndUpdate(req.params.id );
-      return res.redirect('back');
+      let user = await User.findById(req.params.id);
+      User.uploadedAvatar(req , res , function(err){
+        if(err) {
+          console.error("Error in multer ");
+        }
+        //this uploadAvatar is like middleware and process the multipart/form-data type of request and added some details regarding file
+        //in the req.file object
+        user.name = req.body.name;
+        user.email = req.body.email;// we are only able to get read the body only because we have used the multer here
+        if(req.file) {
+          // this will be run only when file is uplaoded and just saves the path of the file that is given by multer for DB purpose
+          if(user.avatar && fs.existsSync(path.join(__dirname,'..'+"/"+user.avatar))){
+              fs.unlinkSync(path.join(__dirname,'..'+"/"+user.avatar));
+          }
+          user.avatar = User.avatarPath+"/"+req.file.filename;
+        }
+         user.save();
+      })
+      return res.redirect("back");
     } catch(e){
-      console.error(`Error in the updating the users info ${err}`);
+      console.error(`Error in the updating the users info ${e}`);
       return res.redirect('back');
     }
   } else {
