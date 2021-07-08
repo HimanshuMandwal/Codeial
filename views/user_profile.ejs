@@ -1,11 +1,11 @@
 <link rel="stylesheet" href="/css/userProfile.css">
 <section id="profile-container" class="section80vh">
-<img src="<%=user.avatar%>" alt="<%=user.name%>" width="100">
+<img src="<%=profileUser.avatar%>" alt="<%=profileUser.name%>" width="100">
 <%if(user.id == profileUser.id) {%>
     <!-- if the user matches than show the form  -->
     <form action="/user/update/<%=profileUser.id%>" enctype="multipart/form-data" method="POST">
         <!-- here we have used the entype to specify  that this form can contain file as well file is a long stream of byte -->
-        <input type="text" name="name" placeholder="Your name" value="<%= profileUser.name%>" required>
+        <input  type="text" name="name" placeholder="Your name" value="<%= profileUser.name%>" required>
         <input type="text" name="email" placeholder="Your Email" value="<%= profileUser.email%>" required>
         <input type="file" name="avatar" placeholder="Profile Picture">
         <button type="submit">update details</button>

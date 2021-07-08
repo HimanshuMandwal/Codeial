@@ -5,7 +5,7 @@ module.exports.home = async function (req, res) { //to have a async statements i
   // console.log(req.cookies); for displaying cookies
   // res.cookie('user_id',34); for additing the cookies
   try {
-    let posts = await Post.find({})
+    let posts = await (Post.find({})
       .sort('-createdAt')
       .populate('user')
       .populate({
@@ -13,7 +13,7 @@ module.exports.home = async function (req, res) { //to have a async statements i
         populate: {
           path: 'user'
         }
-      });
+      })) ;
     let users = await User.find({}); //this successfull response is stored in the users variable and the flow of the code goes to next iteration only after completing this statement
     return res.render('home', {
       posts: posts,
